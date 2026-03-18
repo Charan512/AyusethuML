@@ -63,9 +63,15 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
+import os
+
+# In production, set CORS_ORIGINS=https://your-api.onrender.com,https://your-frontend.onrender.com
+cors_origins_env = os.environ.get("CORS_ORIGINS", "")
+allowed_origins = [s.strip() for s in cors_origins_env.split(",") if s.strip()] if cors_origins_env else ["*"]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -5,3 +5,4 @@ tensorflow==2.18.0
 scikit-learn==1.6.1
 pillow==11.0.0
 joblib==1.4.2
+gunicorn==22.0.0
