@@ -126,9 +126,11 @@ async def identify_plant(file: UploadFile = File(...)):
         img_array = tf.keras.applications.efficientnet_v2.preprocess_input(img_array)
 
         # ── 2. Feature extraction ─────────────────────
-        features = feature_extractor.predict(img_array, verbose=0)
+        # Bypass .predict() to avoid Keras 3 graph execution mismatch on older Keras 2 models
+        features_tensor = feature_extractor(img_array, training=False)
+        features = features_tensor.numpy() if hasattr(features_tensor, "numpy") else features_tensor
         # Flatten to 2D: (1, feature_count) for PCA input
-        features = features.reshape(1, -1)
+        features = np.array(features).reshape(1, -1)
 
         # ── 3. PCA dimensionality reduction ───────────
         pca_features = pca.transform(features)
