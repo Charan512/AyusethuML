@@ -126,8 +126,10 @@ async def identify_plant(file: UploadFile = File(...)):
         img_array = tf.keras.applications.efficientnet_v2.preprocess_input(img_array)
 
         # ── 2. Feature extraction ─────────────────────
-        features_tensor = feature_extractor(img_array, training=False)
-        features = features_tensor.numpy() if hasattr(features_tensor, "numpy") else features_tensor
+        x = img_array
+        for layer in feature_extractor.layers:
+            x = layer(x, training=False)
+        features = x.numpy() if hasattr(x, "numpy") else x
         # Flatten to 2D: (1, feature_count) for PCA input
         features = np.array(features).reshape(1, -1)
 
