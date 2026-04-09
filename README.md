@@ -1,3 +1,12 @@
+---
+title: AyusethuML
+emoji: 🌿
+colorFrom: green
+colorTo: blue
+sdk: docker
+pinned: false
+---
+
 # AyuSethu ML
 
 > FastAPI inference service for medicinal plant species identification.
