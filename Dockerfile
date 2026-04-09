@@ -4,8 +4,7 @@ FROM python:3.11-slim
 RUN useradd -m -u 1000 user
 USER user
 ENV HOME=/home/user \
-	PATH=/home/user/.local/bin:$PATH \
-	TF_USE_LEGACY_KERAS=1
+	PATH=/home/user/.local/bin:$PATH
 
 WORKDIR $HOME/app
 
